@@ -1,0 +1,62 @@
+version: '3.4'
+
+services:
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
+
+  nosql.data:
+    image: mongo
+
+
+  rabbitmq:
+    image: rabbitmq:3-management
+
+  identity.api:
+    image: leadsplus/identity.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Identity.API/Dockerfile    
+    depends_on:
+      - sql.data
+
+  agent.api:
+    image: leadsplus/agent.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/Agent/Agent.API/Dockerfile
+    depends_on:
+      - nosql.data
+      - rabbitmq
+
+  contact.api:
+    image: leadsplus/contact.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/Contact/Contact.API/Dockerfile
+    depends_on:
+      - rabbitmq
+
+  cloudmailin.webhook:
+    image: leadsplus/cloudmailin.webhook:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Webhooks/Cloudmailin/Dockerfile
+    depends_on:
+      - rabbitmq
+
+  webstatus:
+    image: leadsplus/webstatus:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Web/WebStatus/Dockerfile
+
+  webspa:
+    image: leadsplus/webspa:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Web/WebSPA/Dockerfile    
+#    depends_on:
+#      - webshoppingagg
+#      - webshoppingapigw
+#      - webmarketingapigw
+
