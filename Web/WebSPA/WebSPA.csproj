@@ -1,0 +1,147 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnetcorespa-c23d27a4-eb88-4b18-9b77-2a93f3b15119</UserSecretsId>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <GeneratedItemPatterns>wwwroot/dist/**</GeneratedItemPatterns>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(GeneratedItemPatterns)</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Client\app\basket\**" />
+    <Compile Remove="Client\app\campaigns\**" />
+    <Compile Remove="Client\app\catalog\**" />
+    <Compile Remove="Client\app\orders\**" />
+    <Compile Remove="Client\app\shared\components\page-not-found\**" />
+    <Compile Remove="node_modules\**\*;Client\**\*" />
+    <Content Remove="Client\app\basket\**" />
+    <Content Remove="Client\app\campaigns\**" />
+    <Content Remove="Client\app\catalog\**" />
+    <Content Remove="Client\app\orders\**" />
+    <Content Remove="Client\app\shared\components\page-not-found\**" />
+    <EmbeddedResource Remove="Client\app\basket\**" />
+    <EmbeddedResource Remove="Client\app\campaigns\**" />
+    <EmbeddedResource Remove="Client\app\catalog\**" />
+    <EmbeddedResource Remove="Client\app\orders\**" />
+    <EmbeddedResource Remove="Client\app\shared\components\page-not-found\**" />
+    <None Remove="Client\app\basket\**" />
+    <None Remove="Client\app\campaigns\**" />
+    <None Remove="Client\app\catalog\**" />
+    <None Remove="Client\app\orders\**" />
+    <None Remove="Client\app\shared\components\page-not-found\**" />
+    <None Remove="Client\app\shared\services\authentication.guard.ts" />
+    <None Remove="Client\environments\environment.prod.ts" />
+    <None Remove="Client\environments\environment.ts" />
+    <None Remove="Client\guid.ts" />
+    <None Remove="Client\main.ts" />
+    <None Remove="Client\app\shared\models\basket.model.ts" />
+    <None Remove="Client\app\shared\models\basketCheckout.model.ts" />
+    <None Remove="Client\app\shared\models\basketItem.model.ts" />
+    <None Remove="Client\app\shared\models\campaign.model.ts" />
+    <None Remove="Client\app\shared\models\campaignItem.model.ts" />
+    <None Remove="Client\app\shared\models\catalog.model.ts" />
+    <None Remove="Client\app\shared\models\catalogBrand.model.ts" />
+    <None Remove="Client\app\shared\models\catalogItem.model.ts" />
+    <None Remove="Client\app\shared\models\catalogType.model.ts" />
+    <None Remove="Client\app\shared\models\configuration.model.ts" />
+    <None Remove="Client\app\shared\models\identity.model.ts" />
+    <None Remove="Client\app\shared\models\order-detail.model.ts" />
+    <None Remove="Client\app\shared\models\order.model.ts" />
+    <None Remove="Client\app\shared\models\orderItem.model.ts" />
+    <None Remove="Client\app\shared\models\pager.model.ts" />
+    <None Remove="Client\app\shared\pipes\uppercase.pipe.spec.ts" />
+    <None Remove="Client\app\shared\pipes\uppercase.pipe.ts" />
+    <None Remove="Client\app\shared\services\basket.wrapper.service.ts" />
+    <None Remove="Client\app\shared\services\configuration.service.ts" />
+    <None Remove="Client\app\shared\services\data.service.ts" />
+    <None Remove="Client\app\shared\services\notification.service.ts" />
+    <None Remove="Client\app\shared\services\security.service.ts" />
+    <None Remove="Client\app\shared\services\signalr.service.ts" />
+    <None Remove="Client\app\shared\services\storage.service.ts" />
+    <None Remove="Client\app\shared\shared.module.ts" />
+    <None Remove="Client\polyfills.ts" />
+    <None Remove="Client\test.ts" />
+    <None Remove="Client\typings.d.ts" />
+    <None Remove="postcss.config.js" />
+    <Content Include="postcss.config.js" />
+    <Content Include="Setup\images.zip">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.json;">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="web.config;">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\**\*;">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.6.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.Kubernetes" Version="1.0.0-beta8" />
+    <PackageReference Include="Microsoft.ApplicationInsights.ServiceFabric" Version="2.1.1-beta1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Redis" Version="0.3.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+
+  <!-- workaround for https://github.com/aspnet/websdk/issues/114 -->
+  <!--
+  <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths" DependsOnTargets="PrepareForPublish">
+      <ItemGroup>
+          <Content Include="wwwroot/**" CopyToPublishDirectory="PreserveNewest" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(Content)" />
+      </ItemGroup>
+  </Target>
+  -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\HealthChecks\src\Microsoft.AspNetCore.HealthChecks\Microsoft.AspNetCore.HealthChecks.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Client\app\shared\components\" />
+    <Folder Include="Client\vendors\" />
+    <Folder Include="Client\styles\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Client\app\shared\services\authentication.guard.ts" />
+    <TypeScriptCompile Include="Client\app\shared\services\security.service.ts" />
+    <TypeScriptCompile Include="Client\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="Client\environments\environment.ts" />
+    <TypeScriptCompile Include="Client\guid.ts" />
+    <TypeScriptCompile Include="Client\main.ts" />
+    <TypeScriptCompile Include="Client\app\app.component.ts" />
+    <TypeScriptCompile Include="Client\app\app.module.ts" />
+    <TypeScriptCompile Include="Client\app\shared\models\configuration.model.ts" />
+    <TypeScriptCompile Include="Client\app\shared\models\identity.model.ts" />
+    <TypeScriptCompile Include="Client\app\shared\models\pager.model.ts" />
+    <TypeScriptCompile Include="Client\app\shared\pipes\uppercase.pipe.ts" />
+    <TypeScriptCompile Include="Client\app\shared\services\configuration.service.ts" />
+    <TypeScriptCompile Include="Client\app\shared\services\data.service.ts" />
+    <TypeScriptCompile Include="Client\app\shared\services\notification.service.ts" />
+    <TypeScriptCompile Include="Client\app\shared\services\signalr.service.ts" />
+    <TypeScriptCompile Include="Client\app\shared\services\storage.service.ts" />
+    <TypeScriptCompile Include="Client\app\shared\shared.module.ts" />
+    <TypeScriptCompile Include="Client\polyfills.ts" />
+    <TypeScriptCompile Include="Client\test.ts" />
+    <TypeScriptCompile Include="Client\typings.d.ts" />
+  </ItemGroup>
+
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties package-lock_1json__JSONSchema="http://json.schemastore.org/bower" />
+    </VisualStudio>
+  </ProjectExtensions>
+
+</Project>

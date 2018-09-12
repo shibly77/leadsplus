@@ -1,0 +1,15 @@
+.page-substation {
+    .stat-num {
+        display: block;
+        color: theme-color("primary");
+        font-size: 32px;
+        font-weight: $font-weight-thin;
+        line-height: 32px;
+    }
+
+    .space-bar {
+        padding: 3px;
+        border-radius: $border-radius;
+        margin-right: 5px;
+    }
+}

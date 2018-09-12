@@ -1,0 +1,35 @@
+.page-device {
+    .stat-num {
+        display: block;
+        color: theme-color("primary");
+        font-size: 32px;
+        font-weight: $font-weight-thin;
+        line-height: 32px;
+    }
+
+    .space-bar {
+        padding: 3px;
+        border-radius: $border-radius;
+        margin-right: 5px;
+    }
+}
+
+.page-device-detail {
+    .tab-content {
+        padding-top: 2em;
+        padding-bottom: 1em;
+    }
+
+    .mat-tab-body-content {
+        overflow: hidden;
+    }
+
+    .box {
+        position: relative;
+        border-radius: $border-radius-lg;
+    }
+
+    .hero-title, .hero-tagline {
+        color: #ffffff;
+    }
+}

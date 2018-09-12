@@ -1,0 +1,23 @@
+<section class="page-agent container-fluid with-maxwidth no-breadcrumbs">
+    <div class="box box-default">
+        <div class="box-heading">
+            <div class="row" *ngIf="!hideHeaderMenu">
+                <div class="col-lg-6 text-left">
+                    <button mat-raised-button type="button" class="btn-w-xs" (click)="previousAgentClicked()"><i class="fa fa-angle-left"></i></button>
+                    <button mat-raised-button type="button" class="btn-w-xs" (click)="nextAgentClicked()"><i class="fa fa-angle-right"></i></button>
+
+                </div>
+                <div class="col-lg-6 text-right">
+                    <a class="btn-icon btn-icon-md btn-primary" href="javascript:;" [routerLink]="['addnew']"><i class="fa fa-plus"></i></a>
+                    <span class="space space-sm"></span>
+                    <a class="btn-icon btn-icon-md btn-primary" href="javascript:;" (click)="deleteAgentClicked"><i class="fa fa-trash"></i></a>
+                    <!--<span class="space space-sm"></span>
+                    <a class="btn-icon btn-icon-md btn-primary" href="javascript:;" [routerLink]="['../list']"><i class="fa fa-list"></i></a>-->
+                </div>
+            </div>
+        </div>        
+        <div class="box-body">
+            <router-outlet></router-outlet>
+        </div>
+    </div>        
+</section>

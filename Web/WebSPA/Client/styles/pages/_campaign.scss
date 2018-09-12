@@ -1,0 +1,26 @@
+$skin-gray: rgba(221,221,221,.3);
+
+.page-campaign-builder {
+  padding-top: 60px;
+  a:hover{
+    cursor: pointer;
+    text-decoration: none !important;  
+  }
+  .tab-content{
+    margin: 1.6em 0;
+  }
+
+  .is-selected { 
+    border: 1px solid rgba(theme-color("primary"), .8)
+  }
+
+  .border-with-hover { 
+    &:hover {
+      border: 1px solid rgba(theme-color("primary"), .8)
+    }
+  }
+
+  .content-editor{
+    padding-top: 50px;
+  }
+}

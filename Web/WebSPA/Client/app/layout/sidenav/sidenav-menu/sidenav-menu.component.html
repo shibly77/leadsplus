@@ -1,0 +1,17 @@
+<ul class="nav" myAccordionNav myAppendSubmenuIcon mySlimScroll myHighlightActiveItems>
+  <!-- <li class="nav-header"><span>Navigation</span></li> -->
+  <li><a mat-button [routerLink]="['/app/dashboard']"><i class="nav-icon material-icons">home</i><span class="nav-text">Dashboard</span></a></li>
+  <li>
+    <a mat-button href="agent"><i class="nav-icon material-icons">bubble_chart</i><span class="nav-text">Agent Setup</span></a>
+    <ul>
+      <li><a mat-button class="md-button prepend-icon" [routerLink]="['agent/detail']" [class.activated]="currentUrl == 'agent/editor'"><span>Add Agent</span></a></li>
+      <li><a mat-button class="md-button prepend-icon" [routerLink]="['agent/detail']"><span>Agent List</span></a></li>
+    </ul>
+  </li>
+  <li>
+    <a mat-button href="app/addressbook"><i class="nav-icon material-icons">format_color_text</i><span class="nav-text">Address Book</span></a>
+    <ul>
+      <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/addressbook/report']"><span>Address Book</span></a></li>
+    </ul>
+  </li>
+</ul>

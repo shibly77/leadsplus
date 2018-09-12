@@ -1,0 +1,23 @@
+<section class="page-agent-email-setup container-fluid with-maxwidth no-breadcrumbs">
+    <article class="article">
+        <h2 class="article-title">Integration Setting</h2>
+        <div class="box box-default">
+            <div class="box-body padding-xl">
+                <form [formGroup]="integrationForm" class="form-inline" (ngSubmit)="submitForm(integrationForm.value)">
+                    <label class="sr-only" for="inlineFormInput">Name</label>
+                    <input type="text" class="form-group form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" formControlName="integrationEmail" placeholder="Type your mailbox name">
+
+                    <label class="sr-only" for="inlineFormInputGroup">adfenixleads.com</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">@</div>
+                        <input class="form-control" id="inlineFormInputGroup" disabled placeholder="adfenixleads.com" type="text">
+                    </div>
+
+                    <button mat-raised-button type="submit" color="primary" class="btn-w-md" [disabled]="!integrationForm.valid || isAgentProcessing">Generera</button>
+
+                </form>
+
+            </div>
+        </div>
+    </article>
+</section>

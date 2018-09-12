@@ -1,0 +1,101 @@
+// Star colors 
+$star-rating-0:         #c8c8c8;
+$star-rating-1:         rgba(226, 32, 39,.85); // #e22027
+$star-rating-2:         rgba(244, 115, 36,.85); // #f47324
+$star-rating-3:         rgba(248, 204, 24,.85); // #f8cc18
+$star-rating-4:         rgba(115, 177, 67,.85); // #73b143
+$star-rating-5:         rgba(0, 127, 78,.85); // #007f4e
+
+// Star Variants
+.star-rating {
+  margin: 0 0 1em 0;
+  &.size-small {
+      .star-1, .star-2, .star-3, .star-4, .star-5 {
+          float: left;
+          line-height: 9px;
+          padding: 2px;
+          border-radius: 2px;  
+          margin: 0 3px 0 0;
+
+          .star-image {
+              width: 10px;
+              height: auto;
+          }
+      }
+  }
+  &.size-medium {
+      .star-1, .star-2, .star-3, .star-4, .star-5 {
+          float: left;
+          line-height: 1em;
+          padding: 3px;
+          border-radius: 3px;  
+          margin: 0 3px 0 0;
+
+          .star-image {
+              width: 20px;
+              height: auto;
+          }
+      }
+  }
+  &.size-large {
+      .star-1, .star-2, .star-3, .star-4, .star-5 {
+          float: left;
+          line-height: 1em;
+          padding: 4px;
+          border-radius: 4px;
+          margin: 0 4px 0 0;
+
+          .star-image {
+              width: 30px;
+              height: auto;
+          }
+      }
+  }
+
+  &.count-0 {
+      .star-1, .star-2, .star-3, .star-4, .star-5 {
+          background: $star-rating-0;
+      }
+  }
+  &.count-1 {
+      .star-1 {
+          background: $star-rating-1;
+      }
+      .star-2, .star-3, .star-4, .star-5 {
+          background: $star-rating-0;
+      }
+  }
+  &.count-2 {
+      .star-1, .star-2 {
+          background: $star-rating-2;
+      }
+      .star-3, .star-4, .star-5 {
+          background: $star-rating-0;
+      }
+  }
+  &.count-3 {
+      .star-1, .star-2, .star-3 {
+          background: $star-rating-3;
+      }
+      .star-4, .star-5 {
+          background: $star-rating-0;
+      }
+  }
+  &.count-4 {
+      .star-1, .star-2, .star-3, .star-4 {
+          background: $star-rating-4;
+      }
+      .star-5 {
+          background: $star-rating-0;
+      }
+  }
+  &.count-5 {
+      .star-1, .star-2, .star-3, .star-4, .star-5 {
+          background: $star-rating-5;
+      }
+  }
+
+  .float-none {
+    float: none;
+  }
+}
