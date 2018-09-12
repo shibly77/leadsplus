@@ -67,9 +67,6 @@
     <None Remove="Client\typings.d.ts" />
     <None Remove="postcss.config.js" />
     <Content Include="postcss.config.js" />
-    <Content Include="Setup\images.zip">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
     <Content Update="appsettings.json;">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -111,6 +108,7 @@
     <Folder Include="Client\app\shared\components\" />
     <Folder Include="Client\vendors\" />
     <Folder Include="Client\styles\" />
+    <Folder Include="Setup\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
