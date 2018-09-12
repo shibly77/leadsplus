@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Agent.Command;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Agent.Repositories;
-using Agent.Command;
-using Agent.Services;
-using MediatR;
 
 namespace Agent.API.Controllers
 {
@@ -14,17 +12,11 @@ namespace Agent.API.Controllers
     [Authorize]
     public class CommandsController : ControllerBase
     {
-        private readonly IIdentityService identityService;
-        private readonly IAgentRepository agentRepository;
-        private readonly IMediator _mediator;
+        private readonly IMediator mediator;
         
-        public CommandsController(IAgentRepository agentRepository, 
-            IMediator mediator,
-            IIdentityService identityService)
+        public CommandsController(IMediator mediator)
         {
-            identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
-            agentRepository = agentRepository ?? throw new ArgumentNullException(nameof(agentRepository));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
          
         //POST api/v1/[controller]/create
@@ -34,7 +26,7 @@ namespace Agent.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateAgent([FromBody] CreateAgentCommand newAgentRequest)
         {
-            var result = await _mediator.Send(newAgentRequest);
+            var result = await mediator.Send(newAgentRequest);
            
             return result ? 
                 (IActionResult)Ok(result) : 
@@ -48,7 +40,7 @@ namespace Agent.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateAgent([FromBody] UpdateAgentCommand updategentCommand)
         {
-            var result = await _mediator.Send(updategentCommand);
+            var result = await mediator.Send(updategentCommand);
 
             return result ?
                 (IActionResult) Ok() :
@@ -62,7 +54,7 @@ namespace Agent.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateAgentIntigrationEmail([FromBody] CreateAgentIntigrationEmailAccountCommand createAgentIntigrationEmailAccountCommand)
         {
-            var result = await _mediator.Send(createAgentIntigrationEmailAccountCommand);
+            var result = await mediator.Send(createAgentIntigrationEmailAccountCommand);
             
             return result ?
                 (IActionResult) Ok(result) :
@@ -76,7 +68,7 @@ namespace Agent.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateAgentTypeFormAccount([FromBody] CreateAgentTypeFormAccountCommand createAgentTypeFormAccount)
         {
-            var result = await _mediator.Send(createAgentTypeFormAccount);
+            var result = await mediator.Send(createAgentTypeFormAccount);
 
             return result ?
                 (IActionResult)Ok(result) :
@@ -90,19 +82,7 @@ namespace Agent.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> Delete(DeleteAgentCommand deleteAgentCommand)
         {
-            if (deleteAgentCommand == null)
-            {
-                return BadRequest();
-            }
-
-            var agentToDelete = await agentRepository.GetAsync(deleteAgentCommand.AggregateId);
-
-            if (agentToDelete is null)
-            {
-                return NotFound();
-            }
-
-            var result = await _mediator.Send(deleteAgentCommand);
+            var result = await mediator.Send(deleteAgentCommand);
 
             return NoContent();
         }

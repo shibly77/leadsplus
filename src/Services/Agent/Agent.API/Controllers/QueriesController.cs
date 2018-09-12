@@ -1,43 +1,38 @@
 ﻿namespace Agent.API.Controllers
 {
-    using Agent.Command;
-    using Agent.Repositories;
-    using Agent.Services;
-    using Microsoft.AspNetCore.Authorization;
+    using Agent.Domain;
+    using Agent.Domain.Query;
+    using LeadsPlus.Core.Query;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Net;
     using System.Threading.Tasks;
-    using Agent.Domain;
 
     [Route("api/v1/[controller]")]
     //[Authorize]
     public class QueriesController : ControllerBase
     {
-        private readonly IIdentityService _identityService;
-        private readonly IAgentRepository _agentRepository;
+        private readonly IQueryExecutor queryExecutor;
 
-        public QueriesController(IAgentRepository agentRepository, 
-            IIdentityService identityService)
+        public QueriesController(IQueryExecutor queryExecutor)
         {
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
-            _agentRepository = agentRepository ?? throw new ArgumentNullException(nameof(agentRepository));
+            this.queryExecutor = queryExecutor ?? throw new ArgumentNullException(nameof(queryExecutor));
         }
 
         //GET api/v1/[controller]/1
         [Route("getagentbyid")]
         [HttpGet]
         [ProducesResponseType(typeof(Agent), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAgent(string id)
+        public async Task<IActionResult> GetAgent(GetAgentQuery query)
         {
-            var agnet = await _agentRepository.GetAsync(id);
+            var agent = await queryExecutor.Execute<GetAgentQuery, Agent>(query);
 
-            if (agnet is null)
+            if (agent is null)
             {
                 return NotFound();
             }
 
-            return Ok(agnet);
+            return Ok(agent);
         }
 
         //GET api/v1/[controller]/
@@ -46,7 +41,8 @@
         //[ProducesResponseType(typeof(List<Agent>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllAgents()
         {
-            var agents = await _agentRepository.GetListAsync();
+            var agents = await queryExecutor.Execute<GetAllAgentQuery, Agent>(new GetAllAgentQuery());
+
             return Ok(agents);
         }
     }

@@ -11,12 +11,6 @@ using System.Threading.Tasks;
 
 namespace Agent.TypeFormIntegration
 {
-    public enum PostRequests
-    {
-        Images,
-        Create
-    }
-
     public static class EndPoints
     {
         public const string Root = "https://api.typeform.com/";
@@ -68,20 +62,6 @@ namespace Agent.TypeFormIntegration
                     var response = await SendRequestAsync(uri, httpClient, req);
                     return response;
                 }
-            }
-        }
-
-        private static string FindEndPoint(PostRequests post)
-        {
-            switch (post)
-            {
-                case PostRequests.Images:
-                    return EndPoints.Images;
-                case PostRequests.Create:
-                    return EndPoints.Create;
-                default:
-                    throw new Exception();
-
             }
         }
 

@@ -1,12 +1,12 @@
 ﻿namespace Agent.Infrastructure.Filters
 {
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc.Filters;
     using Agent.Infrastructure.ActionResults;
-    using Agent.Infrastructure.Exceptions;
+    using LeadsPlus.Core.Exceptions;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.Extensions.Logging;
     using System.Net;
-    using Microsoft.AspNetCore.Mvc;
 
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
@@ -25,7 +25,7 @@
                 context.Exception,
                 context.Exception.Message);
 
-            if (context.Exception.GetType() == typeof(AgentDomainException))
+            if (context.Exception.GetType() == typeof(DomainException))
             {
                 var json = new JsonErrorResponse
                 {

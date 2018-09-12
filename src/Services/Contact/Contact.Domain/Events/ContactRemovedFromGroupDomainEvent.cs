@@ -1,6 +1,8 @@
-﻿namespace Contact.Domain.Events
+﻿using MediatR;
+
+namespace Contact.Domain.Events
 {
-    public class ContactRemovedFromGroupDomainEvent : Event
+    public class ContactRemovedFromGroupDomainEvent : INotification
     {
         public string[] ContactIds { get; set; }
     }

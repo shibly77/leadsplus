@@ -1,6 +1,8 @@
-﻿namespace Contact.Domain.Events
+﻿using MediatR;
+
+namespace Contact.Domain.Events
 {
-    public class ContactCopiedToGroupDomainEvent : Event
+    public class ContactCopiedToGroupDomainEvent : INotification
     {
         public string[] ContactIds { get; set; }
     }
