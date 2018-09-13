@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1.300
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 
 WORKDIR /dotnetapp
 EXPOSE 80
