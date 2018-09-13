@@ -6,13 +6,6 @@ export AWS_ECS_REPO_DOMAIN=$AWS_ACCOUNT_NUMBER.dkr.ecr.$AWS_DEFAULT_REGION.amazo
 
 # Build process
 
-docker build -f ./src/Services/Agent/Agent.API/Dockerfile -t agent-api ./src/Services/Agent/Agent.API
-
-ls
-
-pwd
-cd -
-
-ls
+docker build -f ../src/Services/Agent/Agent.API/Dockerfile -t agent-api ../src/Services/Agent/Agent.API --no-cache
 docker tag agent-api $AWS_ECS_REPO_DOMAIN/fibonapi
 
