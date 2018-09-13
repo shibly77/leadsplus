@@ -10,6 +10,7 @@ docker build -f ./src/Services/Agent/Agent.API/Dockerfile -t agent-api ./src/Ser
 
 ls
 
+pwd
 cd -
 
 ls
