@@ -2,7 +2,7 @@ language: csharp
 os: linux
 dist: trusty
 sudo: required
-dotnet: 2.1.0
+dotnet: 2.1.300
 mono: none
 env: DOTNETCORE=1
 
