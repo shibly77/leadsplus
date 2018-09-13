@@ -8,7 +8,7 @@ namespace Agent
     public class AgentSettings
     {
         public string EventBusConnection { get; set; }
-        public string ConnectionString { get; set; }
-        public string Database { get; set; }
+        public string DatabaseConnectionString { get; set; }
+        public string DatabaseName { get; set; }
     }
 }

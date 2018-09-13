@@ -1,10 +1,10 @@
-﻿namespace LeadsPlus.Core
+﻿namespace LeadsPlus.Core.Extension
 {
     using MediatR;
     using System.Linq;
     using System.Threading.Tasks;
 
-    static class MediatorExtension
+    public static class MediatorExtension
     {
         public static async Task DispatchDomainEventsAsync(this IMediator mediator, AggregateRoot entity)
         {

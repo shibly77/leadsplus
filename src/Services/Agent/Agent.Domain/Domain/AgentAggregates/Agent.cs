@@ -51,14 +51,24 @@
             this.AddDomainEvent(contactCreatedDomainEvent);
         }
 
-        public void CreateMailbox()
+        public void UpdateMailbox(string newMailbox)
         {
-            var agentMailboxCreatedEvent = new AgentMailboxCreatedEvent()
+            var agentMailboxUpdatedEvent = new AgentMailboxUpdatedEvent()
             {
                 Agent = this
             };
 
-            this.AddDomainEvent(agentMailboxCreatedEvent);
+            this.AddDomainEvent(agentMailboxUpdatedEvent);
+        }
+
+        public void UpdateTypeform()
+        {
+            var agentTypeformUpdatedEvent = new AgentTypeformUpdatedEvent()
+            {
+                Agent = this
+            };
+
+            this.AddDomainEvent(agentTypeformUpdatedEvent);
         }
     }
 }

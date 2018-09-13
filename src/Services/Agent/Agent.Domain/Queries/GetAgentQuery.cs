@@ -12,13 +12,13 @@
         public string AgentId { get; set; }
     }
 
-    public class GetContactQueryHandler : IQueryHandler<GetAgentQuery, Agent>
+    public class GetAgentQueryHandler : IQueryHandler<GetAgentQuery, Agent>
     {
         private readonly IRepository<Agent> contactRepository;
 
-        public GetContactQueryHandler(IRepository<Agent> contactQueries)
+        public GetAgentQueryHandler(IRepository<Agent> contactRepository)
         {
-            this.contactRepository = contactQueries;
+            this.contactRepository = contactRepository;
         }
 
         public async Task<Agent> Handle(GetAgentQuery query)

@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using Autofac;
     using Autofac.Core;
+    using MediatR;
 
     public interface IQueryExecutor
     {
@@ -11,14 +12,15 @@
 
     public class QueryExecutor : IQueryExecutor
     {
-        private readonly Container container;
-        public QueryExecutor(Container container)
+        private readonly IComponentContext container;
+        public QueryExecutor(IComponentContext container)
         {
             this.container = container;
         }
 
         public Task<Result> Execute<Query, Result>(Query query)
         {
+            var s = container.Resolve<IMediator>();
             var queryHandler = container.Resolve(typeof(IQueryHandler<Query, Result>)) as IQueryHandler<Query, Result>;
 
             var response = queryHandler.Handle(query);

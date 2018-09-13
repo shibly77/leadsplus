@@ -3,7 +3,7 @@
     using MediatR;
     using System;
 
-    public class AgentMailboxCreatedEvent : INotification
+    public class AgentTypeformUpdatedEvent : INotification
     {
         public Agent Agent { get; set; }
     }

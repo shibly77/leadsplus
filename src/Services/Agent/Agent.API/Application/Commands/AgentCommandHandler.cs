@@ -8,6 +8,7 @@
     using Agent.TypeFormIntegration;
     using LeadsPlus.BuildingBlocks.EventBus.Abstractions;
     using LeadsPlus.Core;
+    using LeadsPlus.Core.Extension;
     using LeadsPlus.Core.Query;
     using MediatR;
     using MongoDB.Driver;
@@ -101,31 +102,15 @@
         {
             var agent = await queryExecutor.Execute<GetAgentQuery, Agent>(new GetAgentQuery() { AgentId = createAgentIntigrationEmailAccountCommand.AggregateId });
 
-            agent.CreateMailbox();
-
-            agent.IntegrationEmail = await CreateIntigrationEmail(createAgentIntigrationEmailAccountCommand.AgentEmail.Replace("@", "").Replace(" ", ""));
-
-            agent.UpdatedDate = DateTime.UtcNow;
-
-            await agentRepository.Collection.ReplaceOneAsync(
-                doc => doc.Id == agent.Id,
-                agent,
-                new UpdateOptions { IsUpsert = true });
-
-            var filter = Builders<Agent>.Filter.Eq("Id", agent.Id);
-            var update = Builders<Agent>.Update
-                .Set("IntegrationEmail", agent.IntegrationEmail)
-                .CurrentDate("UpdatedDate");
-
-            await agentRepository.Collection
-                    .UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+            agent.UpdateMailbox(createAgentIntigrationEmailAccountCommand.MailboxName);
+            await mediator.DispatchDomainEventsAsync(agent);
 
             return true;
         }
 
         public async Task<bool> Handle(CreateAgentTypeFormAccountCommand createAgentTypeFormAccount, CancellationToken cancellationToken)
         {
-            var agent = await queryExecutor.Execute<GetAgentQuery, Agent>(new GetAgentQuery() { AgentId = createAgentTypeFormAccount.AggregateId });
+            //var agent = await queryExecutor.Execute<GetAgentQuery, Agent>(new GetAgentQuery() { AgentId = createAgentTypeFormAccount.AggregateId });
 
             //request to type form for a url
             //create a spreadsheet
@@ -137,39 +122,5 @@
 
             return true;
         }
-
-        public async Task<string> CreateIntigrationEmail(string mailboxName)
-        {
-            var emailAccount = new EmailAccount
-            {
-                Domain = "adfenixleads.com",//should come from config
-                UserName = mailboxName,
-                Password = "chngeme",
-                Quota = 400
-            };
-
-            return await new MailboxCreator(emailAccount).Create();
-        }
-
-        private async Task<string> CreateTypeformUrl(Agent agent)
-        {
-            dynamic typeform = await TypeFormCreator.GetTemplateFormAsync();
-
-            typeform.title = $"{agent.Firstname}_{agent.Lastname}_{agent.Email}_{agent.Id}";
-            typeform.id = "";
-
-            return await TypeFormCreator.CreateTypeFormAsync(typeform);
-        }
-
-        private async Task<string> CreateSpreadsheetForTypeformResponse(Agent agent)
-        {
-            dynamic typeform = await TypeFormCreator.GetTemplateFormAsync();
-
-            typeform.title = $"{agent.Firstname}_{agent.Lastname}_{agent.Email}_{agent.Id}";
-            typeform.id = "";
-
-            return await TypeFormCreator.CreateTypeFormAsync(typeform);
-        }
-
     }
 }

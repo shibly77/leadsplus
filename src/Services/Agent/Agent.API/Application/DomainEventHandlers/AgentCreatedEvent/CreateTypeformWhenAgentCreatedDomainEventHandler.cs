@@ -16,13 +16,11 @@
                         : INotificationHandler<AgentCreatedDomainEvent>
     {
         private readonly ILoggerFactory _logger;
-        private readonly IRepository<Agent> _contactRepository;
         private readonly IIdentityService _identityService;
         private readonly IEventBus _eventBus;
 
         public CreateTypeformWhenAgentCreatedDomainEventHandler(
             ILoggerFactory logger,
-            IRepository<Agent> contactRepository,
             IIdentityService identityService,
             IEventBus eventBus)
         {

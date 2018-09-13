@@ -1,4 +1,4 @@
-﻿namespace Agent.DomainEventHandlers.ContactCreatedEvent
+﻿namespace Contact.DomainEventHandlers.ContactCreatedEvent
 {
     using Agent.Domain.Events;
     using LeadsPlus.BuildingBlocks.EventBus.Abstractions;
@@ -10,42 +10,65 @@
     using LeadsPlus.Core;
     using Agent.Services;
     using Agent.Domain;
+    using Agent.TypeFormIntegration;
     using Agent.Domain.Query;
-    using LeadsPlus.Core.Query;
+    using MongoDB.Driver;
     using Agent.EmailCreator;
 
-    public class AgentMailboxCreatedEvent
-                        : INotificationHandler<AgentCreatedDomainEvent>
+    public class AgentMailboxCreatedEventHandler
+                        : INotificationHandler<AgentCreatedDomainEvent>, INotificationHandler<AgentMailboxUpdatedEvent>
     {
         private readonly ILoggerFactory logger;
-        private readonly IRepository<Agent> agnetRepository;
         private readonly IIdentityService identityService;
         private readonly IEventBus eventBus;
-        private readonly IQueryExecutor queryExecutor;
 
-        public AgentMailboxCreatedEvent(
+        public AgentMailboxCreatedEventHandler(
             ILoggerFactory logger,
-            IRepository<Agent> agentRepository,
             IIdentityService identityService,
-            IEventBus eventBus,
-            IQueryExecutor queryExecutor)
+            IEventBus eventBus)
         {
             this.identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.queryExecutor = queryExecutor ?? throw new ArgumentNullException(nameof(queryExecutor));
         }
 
         public async Task Handle(AgentCreatedDomainEvent agentCreatedDomainEvent, CancellationToken cancellationToken)
         {
-            var agent = await queryExecutor.Execute<GetAgentQuery, Agent>(new GetAgentQuery() { AgentId = agentCreatedDomainEvent.Agent.Id });
+            await Processor(agentCreatedDomainEvent.Agent);
 
-            
-
-            //Do create typeform
-            logger.CreateLogger(nameof(agentCreatedDomainEvent)).LogTrace($"Agent xxx {agentCreatedDomainEvent.Agent.Email}.");
+            logger.CreateLogger(nameof(agentCreatedDomainEvent)).LogTrace($"Agent mailbox created for {agentCreatedDomainEvent.Agent.Id}.");
         }
 
-        
+        public async Task Handle(AgentMailboxUpdatedEvent agentMailboxUpdatedEvent, CancellationToken cancellationToken)
+        {
+            await Processor(agentMailboxUpdatedEvent.Agent);
+
+            logger.CreateLogger(nameof(agentMailboxUpdatedEvent)).LogTrace($"Agent mailbox created for {agentMailboxUpdatedEvent.Agent.Id}.");
+        }
+
+        private async Task Processor(Agent agent)
+        {
+            string mailboxName = $"{agent.Email.Split("@")[0]}";
+
+            var integrationEmail = await CreateIntigrationEmail(mailboxName);
+
+            var filter = Builders<Agent>.Filter.Eq("Id", agent.Id);
+            var update = Builders<Agent>.Update
+                .Set("IntegrationEmail", integrationEmail)
+                .CurrentDate("UpdatedDate");
+        }
+
+        public async Task<string> CreateIntigrationEmail(string mailboxName)
+        {
+            var emailAccount = new EmailAccount
+            {
+                Domain = "adfenixleads.com",//should come from config
+                UserName = mailboxName,
+                Password = "chngeme",
+                Quota = 400
+            };
+
+            return await new MailboxCreator(emailAccount).Create();
+        }
     }
 }
