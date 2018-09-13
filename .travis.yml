@@ -16,6 +16,8 @@ addons:
 
 script:
   - chmod +x ./deploy-envs.sh
+  - chmod +x ./scripts/dotnet-build.sh
+  - chmod +x ./scripts/dotnet-publish.sh
   - chmod +x ./scripts/build.sh
   - chmod +x ./scripts/deploy.sh
   - cd scripts && ./build.sh
