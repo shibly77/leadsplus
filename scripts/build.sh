@@ -6,6 +6,6 @@ export AWS_ECS_REPO_DOMAIN=$AWS_ACCOUNT_NUMBER.dkr.ecr.$AWS_DEFAULT_REGION.amazo
 
 # Build process
 
-docker build -f ./src/Services/Agent/Agent.API/Dockerfile -t Agent.Api ../
+docker build -f ./src/Services/Agent/Agent.API/Dockerfile -t agent.api ../
 docker tag Agent.API $DOCKER_USERNAME/fibon-api:$DOCKER_TAG
 
