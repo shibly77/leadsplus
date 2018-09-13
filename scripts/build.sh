@@ -9,5 +9,5 @@ export AWS_ECS_REPO_DOMAIN=$AWS_ACCOUNT_NUMBER.dkr.ecr.$AWS_DEFAULT_REGION.amazo
 DOCKER_TAG='latest'
 
 docker build -f ../src/Services/Agent/Agent.API/Dockerfile -t agent-api ../src/Services/Agent/Agent.API --no-cache
-docker tag agent-api:DOCKER_TAG $AWS_ECS_REPO_DOMAIN/fibonapi
+docker tag agent-api:$DOCKER_TAG $AWS_ECS_REPO_DOMAIN/fibonapi
 
