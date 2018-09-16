@@ -1,2 +1,1 @@
-dotnet publish .srcFibon.Api -c Release -o .binDocker
-dotnet publish .srcFibon.Service -c Release -o .binDocker
+dotnet publish ./src/Agent.Api -c Release -o ./bin/Docker
