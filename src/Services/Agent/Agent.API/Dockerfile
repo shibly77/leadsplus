@@ -1,9 +1,18 @@
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
-
-WORKDIR /dotnetapp
+WORKDIR /app
 EXPOSE 80
 
-COPY ./bin/Docker .
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+COPY . .
+WORKDIR /src/src/Services/Agent/Agent.API
+RUN dotnet restore -nowarn:msb3202,nu1503
+RUN dotnet build --no-restore -c Release -o /app
 
-ENV ASPNETCORE_ENVIRONMENT docker
+FROM build AS publish
+RUN dotnet publish --no-restore -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "Agent.API.dll"]
